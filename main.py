@@ -1,3 +1,5 @@
+"""API de gerenciamento de produtos utilizando FastAPI."""
+
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -7,6 +9,7 @@ app = FastAPI()
 
 # Product model
 class Product(BaseModel):
+    """Modelo de produto contendo ID, nome, preço e quantidade."""
     id: int
     name: str
     price: float
@@ -27,11 +30,13 @@ products = [
 # Get all products
 @app.get("/products", response_model=List[Product])
 async def get_products():
+    """Retorna todos os produtos cadastrados."""
     return products
 
 # Get a product by ID
 @app.get("/products/{product_id}", response_model=Product)
 async def get_product(product_id: int):
+    """Retorna um produto específico pelo seu ID."""
     product = next((p for p in products if p.id == product_id), None)
     if product is None:
         raise HTTPException(status_code=404, detail="Product not found")
@@ -40,6 +45,7 @@ async def get_product(product_id: int):
 # Search products by name
 @app.get("/products/search", response_model=List[Product])
 async def search_products(name: Optional[str] = None):
+    """Busca produtos pelo nome."""
     if name is None:
         return products
     filtered = [p for p in products if name.lower() in p.name.lower()]
@@ -48,6 +54,7 @@ async def search_products(name: Optional[str] = None):
 # Add a new product
 @app.post("/products", response_model=Product)
 async def create_product(product: Product):
+    """Cria um novo produto se o ID ainda não existir."""
     if any(p.id == product.id for p in products):
         raise HTTPException(status_code=400, detail="Product ID already exists")
     products.append(product)
@@ -56,6 +63,7 @@ async def create_product(product: Product):
 # Update a product
 @app.put("/products/{product_id}", response_model=Product)
 async def update_product(product_id: int, product: Product):
+    """Atualiza um produto existente pelo ID."""
     index = next((i for i, p in enumerate(products) if p.id == product_id), None)
     if index is None:
         raise HTTPException(status_code=404, detail="Product not found")
@@ -65,10 +73,9 @@ async def update_product(product_id: int, product: Product):
 # Delete a product
 @app.delete("/products/{product_id}", response_model=Product)
 async def delete_product(product_id: int):
+    """Remove um produto pelo ID."""
     index = next((i for i, p in enumerate(products) if p.id == product_id), None)
     if index is None:
         raise HTTPException(status_code=404, detail="Product not found")
     deleted_product = products.pop(index)
     return deleted_product
-
-
