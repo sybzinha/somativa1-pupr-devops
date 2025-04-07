@@ -33,3 +33,21 @@ A API oferece os seguintes endpoints:
 - 🍫 Chocolate 
 
 ---
+
+## ⚙️ Como Executar o Projeto
+
+### 1. Clone o repositório:
+```bash
+git clone git@github.com:sybzinha/somativa1-devops-pucpr.git
+cd somativa1-devops-pucpr
+```
+
+### 2. Instale as dependências:
+```bash
+pip install "fastapi[standard]"
+```
+
+### 3. Execute o servidor:
+```bash
+fastapi dev main.py 
+```
