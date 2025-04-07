@@ -8,6 +8,7 @@ app = FastAPI()
 
 
 # Product model
+# pylint: disable=too-few-public-methods
 class Product(BaseModel):
     """Modelo de produto contendo ID, nome, preço e quantidade."""
     id: int
