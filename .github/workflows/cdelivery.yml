@@ -19,6 +19,6 @@ jobs:
         with:
           name: 📦 Project-Zip
           path: |
-            '**.py'
+            **.py
             README.md
             
