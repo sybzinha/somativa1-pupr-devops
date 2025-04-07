@@ -23,11 +23,19 @@ jobs:
             README.md
 
   deploy:
+    name: 🚚 Continuous Deployment Job
     runs-on: ubuntu-latest
     needs: deliver
+
     steps:
-      - uses: actions/download-artifact@v4
+      - name: 📥 Download artifact
+        uses: actions/download-artifact@v4
         with:
           name: 📦 Project-Zip
-      - name: Display structure of download files
+
+      - name: 📂 Display downloaded files structure
         run: ls -R
+
+      - name: 🧪 Simulate usage or deployment
+        run: |
+          echo "✅ Artifact ready for deployment!"
