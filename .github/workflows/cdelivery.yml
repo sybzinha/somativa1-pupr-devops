@@ -1,0 +1,24 @@
+name: 📦 Continuous Delivery
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  deliver:
+    name: 🚀 Continuous Delivery Job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Simulating Continuous Delivery
+        uses: actions/upload-artifact@v4
+        with:
+          name: 📦 Project-Zip
+          path: |
+            '**.py'
+            README.md
+            
