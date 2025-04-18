@@ -44,6 +44,24 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+  validate:
+    name: 🐳 Docker Validation
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: 📥 Checkout repository
+        uses: actions/checkout@v4
+      -
+        name: 🔍 Lint Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+      -
+        name: 🏗️ Build Docker image as test
+        run: |
+          docker build -t test-image .
+          docker image inspect test-image
+
   discord:
     runs-on: ubuntu-latest
     steps:
